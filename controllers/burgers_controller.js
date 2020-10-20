@@ -5,17 +5,17 @@ var router = express.Router();
 
 var burger = require("../models/burger.js");
 
-
+//Get function for acquiring data from the db
 router.get("/", function(req, res) {
   burger.all(function(data) {
     var hbsObject = {
         burgers: data
     };
-    // console.log(hbsObject);
     res.render("index", hbsObject);
   });
 });
 
+//Post function for putting the data onto the page
 router.post("/api/burgers", function(req, res) {
   burger.create([
     "burger_name", "devoured"
@@ -32,6 +32,8 @@ router.put("/api/burgers/:id", function(req, res) {
 
   console.log("Update in route: ", req.body);
 
+
+  //Update function for changing the data in the db and on the page
   burger.update({
     devoured: true
   }, condition, function(result) {
@@ -44,6 +46,8 @@ router.put("/api/burgers/:id", function(req, res) {
   });
 });
 
+
+//delete function
 router.delete("/api/burgers/:id", function(req, res) {
   var condition = "id = " + req.params.id;
 
